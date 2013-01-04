@@ -110,7 +110,7 @@ void MLSDeformCurve(const Mat& src,
 
 
 int main(int argc, char** argv) {
-	Mat src1 = imread("fish-12.png");
+	Mat src1 = imread("../silhouettes/camel-11.png");
 	if (src1.empty()) {
 		cerr << "can't read image" << endl; exit(0);
 	}
@@ -118,8 +118,8 @@ int main(int argc, char** argv) {
 	GetCurveForImage(src1, a, false);
 	
 	//move curve a bit to the middle, and scale up
-	cv::transform(a,a,getRotationMatrix2D(Point2f(0,0),0,2.0));
-	Mat tmp_curve_m(a); tmp_curve_m += Scalar(100,95);
+	cv::transform(a,a,getRotationMatrix2D(Point2f(0,0),0,1.3));
+//	Mat tmp_curve_m(a); tmp_curve_m += Scalar(100,95);
 	
 	vector<Point2d> a_p2d, a_p2d_smoothed;
 	ConvertCurve(a, a_p2d);
@@ -128,6 +128,6 @@ int main(int argc, char** argv) {
 	vector<pair<char,int> > stringrep = CurvatureExtrema(a_p2d, a_p2d_smoothed,0.05,4.0);
 
 	//Start interactive deformation
-	src1.create(Size(700,350), CV_8UC3);
+	src1.create(Size(700,600), CV_8UC3);
 	MLSDeformCurve(src1,a_p2d,stringrep);
 }
